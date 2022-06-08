@@ -1,0 +1,62 @@
+<html>
+
+<head>
+    <script type="text/javascript">
+        function myfunction() {
+            var apiUrl = 'http://localhost:3000/';
+            fetch(apiUrl).then(response => {
+                response.json().then(data => {
+                    alert(data.response);
+                    console.log(data);
+                    return data;
+                })
+                // return response.json();
+
+            }).then(data => {
+                // Work with JSON data here
+                console.log(data);
+            }).catch(err => {
+                // Do something for an error here
+            });
+
+        }
+        function add() {
+            const num1 = document.getElementById('num1').value;
+            const num2 = document.getElementById('num2').value;
+            console.log(`${num1} + ${num2}`);
+            callApi('add', {firstNumber: num1, secondNumber: num2}, 'PUT')
+
+        }
+        async function callApi(endpoint, body, type) {
+            var apiUrl = `http://localhost:3000/${endpoint}`;
+            
+            fetch(apiUrl, {
+                method: type,
+                body: JSON.stringify(body),
+                headers: {
+                    "Content-Type": "application/json",
+                    "Access-Control-Allow-Methods": "GET,HEAD,OPTIONS,POST,PUT"
+                },
+            }).then(response => {
+                response.json().then(data => {
+                    return data;
+                })
+            }).catch(err => {
+                // Do something for an error here
+            });
+
+        }
+    </script>
+</head>
+
+<body>
+    <p>Click the following button to see the function in action</p>
+    <input type="text" id="num1" />
+    <input type="text" id="num2" />
+
+    <input type="button" onclick="myfunction()" value="Display">
+    <input type="button" onclick="add()" value="+">
+
+</body>
+
+</html>
